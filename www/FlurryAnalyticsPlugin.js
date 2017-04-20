@@ -38,7 +38,7 @@ var FlurryAnalytics = {};
             options = arguments[1];
         }
 
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'initialize', [appKey, options]);
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'initialize', [appKey, options]);
     };
 
     // the params parameter is optional
@@ -59,7 +59,7 @@ var FlurryAnalytics = {};
             params = arguments[1];
         }
 
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
             event,
             false,
             params
@@ -84,7 +84,7 @@ var FlurryAnalytics = {};
             params = arguments[1];
         }
 
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
             event,
             true,
             params
@@ -108,22 +108,23 @@ var FlurryAnalytics = {};
         } else if (arguments.length === 2) {
             params = arguments[1];
         }
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endTimedEvent', [
+        
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endTimedEvent', [
             event,
             params
         ]);
     };
 
     FlurryAnalytics.logPageView = function (successCallback, failureCallback) {
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logPageView', []);
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logPageView', []);
     };
 
     FlurryAnalytics.logError = function (code, message, successCallback, failureCallback) {
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logError', [code, message]);
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logError', [code, message]);
     };
 
     FlurryAnalytics.setLocation = function (location, message, successCallback, failureCallback) {
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setLocation', [
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setLocation', [
             location.latitude,
             location.longitude,
             location.verticalAccuracy,
@@ -133,12 +134,12 @@ var FlurryAnalytics = {};
 
     // only needed for older versions of Android
     FlurryAnalytics.startSession = function (successCallback, failureCallback) {
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'startSession', []);
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'startSession', []);
     };
 
     // only needed for older versions of Android
     FlurryAnalytics.endSession = function (successCallback, failureCallback) {
-        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endSession', []);
+        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endSession', []);
     };
 
 
