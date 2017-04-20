@@ -23,10 +23,9 @@
                 <param name="ios-package" value="FlurryAnalyticsPlugin"/>
             </feature>
         </config-file>
-        <!--<header-file src="src/ios/Flurry.h" />-->
         <header-file src="src/ios/FlurryAnalyticsPlugin.h"/>
         <source-file src="src/ios/FlurryAnalyticsPlugin.m"/>
-        <framework src="Flurry-iOS-SDK" type="podspec" spec="~> 8.0.1" />
+        <framework src="Flurry-iOS-SDK" type="podspec" />
     </platform>
 
     <platform name="android">
