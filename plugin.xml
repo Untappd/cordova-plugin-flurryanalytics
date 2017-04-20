@@ -26,6 +26,9 @@
         <header-file src="src/ios/FlurryAnalyticsPlugin.h"/>
         <source-file src="src/ios/FlurryAnalyticsPlugin.m"/>
         <framework src="Flurry-iOS-SDK" type="podspec" spec="~> 8.0"/>
+        <framework src="SystemConfiguration.framework" />
+        <framework src="CFNetwork.framework" />
+        <framework src="Security.framework" />
     </platform>
 
     <platform name="android">
