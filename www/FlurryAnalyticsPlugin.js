@@ -1,7 +1,10 @@
 var exec = require('cordova/exec');
 
-var FlurryAnalytics = {};
+function FlurryAnalytics(config) {
 
+    if(config) {
+        exec(null, null, 'FlurryAnalyticsPlugin', 'initialize', [config.appKey, config]);
+    }
     /*
      deprecatedd pass the config options in the constructor
      the only function that is actually required to start tracking sessions
@@ -21,7 +24,7 @@ var FlurryAnalytics = {};
      reportSessionsOnClose       (defaults to true, iOS only)
      reportSessionsOnPause       (defaults to true, iOS only)
      */
-    FlurryAnalytics.init = function (appKey /* [options], successCallback, failureCallback */) {
+    this.init = function (appKey /* [options], successCallback, failureCallback */) {
 
         var successCallback,
             failureCallback,
@@ -38,11 +41,29 @@ var FlurryAnalytics = {};
             options = arguments[1];
         }
 
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'initialize', [appKey, options]);
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'initialize', [appKey, options]);
+    };
+
+    this.setUserId = function (userId, successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setUserId', [
+            userId
+        ]);
+    };
+
+    this.setAge = function (age, successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setAge', [
+            age
+        ]);
+    };
+
+    this.setGender = function (gender, successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setGender', [
+            gender
+        ]);
     };
 
     // the params parameter is optional
-    FlurryAnalytics.logEvent = function (event /* [params], successCallback, failureCallback */) {
+    this.logEvent = function (event /* [params], successCallback, failureCallback */) {
 
         var successCallback,
             failureCallback,
@@ -59,7 +80,7 @@ var FlurryAnalytics = {};
             params = arguments[1];
         }
 
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
             event,
             false,
             params
@@ -67,7 +88,7 @@ var FlurryAnalytics = {};
     };
 
     // the params parameter is optional
-    FlurryAnalytics.startTimedEvent = function (event /* [params], successCallback, failureCallback */) {
+    this.startTimedEvent = function (event /* [params], successCallback, failureCallback */) {
 
         var successCallback,
             failureCallback,
@@ -84,7 +105,7 @@ var FlurryAnalytics = {};
             params = arguments[1];
         }
 
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logEvent', [
             event,
             true,
             params
@@ -92,7 +113,7 @@ var FlurryAnalytics = {};
     };
 
     // the params parameter is optional
-    FlurryAnalytics.endTimedEvent = function (event /* [params], successCallback, failureCallback */) {
+    this.endTimedEvent = function (event /* [params], successCallback, failureCallback */) {
 
         var successCallback,
             failureCallback,
@@ -108,23 +129,22 @@ var FlurryAnalytics = {};
         } else if (arguments.length === 2) {
             params = arguments[1];
         }
-        
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endTimedEvent', [
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endTimedEvent', [
             event,
             params
         ]);
     };
 
-    FlurryAnalytics.logPageView = function (successCallback, failureCallback) {
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logPageView', []);
+    this.logPageView = function (successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logPageView', []);
     };
 
-    FlurryAnalytics.logError = function (code, message, successCallback, failureCallback) {
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logError', [code, message]);
+    this.logError = function (code, message, successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'logError', [code, message]);
     };
 
-    FlurryAnalytics.setLocation = function (location, message, successCallback, failureCallback) {
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setLocation', [
+    this.setLocation = function (location, message, successCallback, failureCallback) {
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'setLocation', [
             location.latitude,
             location.longitude,
             location.verticalAccuracy,
@@ -133,16 +153,20 @@ var FlurryAnalytics = {};
     };
 
     // only needed for older versions of Android
-    FlurryAnalytics.startSession = function (successCallback, failureCallback) {
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'startSession', []);
+    this.startSession = function (successCallback, failureCallback) {
+
+        if(cordova.platformId !== 'android') return;
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'startSession', []);
     };
 
     // only needed for older versions of Android
-    FlurryAnalytics.endSession = function (successCallback, failureCallback) {
-        cordova.exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endSession', []);
+    this.endSession = function (successCallback, failureCallback) {
+
+        if(cordova.platformId !== 'android') return;
+        exec(successCallback, failureCallback, 'FlurryAnalyticsPlugin', 'endSession', []);
     };
 
+}
 
 
 module.exports = FlurryAnalytics;
-
